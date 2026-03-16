@@ -14,56 +14,65 @@ body { font-family:'Segoe UI', sans-serif; margin:0; background:#f4f7f9; font-si
 .login-box input { width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box; }
 
 .app-container { display: flex; min-height: 100vh; }
-.nav-sidebar { width: var(--sidebar-w); background: white; border-right: 1px solid #ddd; position: sticky; top: 0; height: 100vh; overflow-y: auto; flex-shrink: 0; }
+
+/* NAVIGAATIO */
+.nav-sidebar { width: var(--sidebar-w); background: white; border-right: 1px solid #ddd; position: sticky; top: 0; height: 100vh; overflow-y: auto; flex-shrink: 0; transition: 0.3s; }
 .nav-header { background: var(--hw-dark); color: white; padding: 20px; font-weight: bold; font-size: 16px; }
 .nav-item { border-bottom: 1px solid #eee; }
 .nav-main-cat { padding: 15px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; }
 .nav-sub-list { display: none; background: #fafafa; padding-bottom: 10px; }
 .nav-item.active .nav-sub-list { display: block; }
 
-.main-content { flex: 1; padding: 30px; min-width: 0; }
+.main-content { flex: 1; padding: 20px; min-width: 0; }
+
+/* MOBIILIPALKKI */
+.mobile-bar { display: none; background: var(--hw-dark); padding: 10px; position: sticky; top: 0; z-index: 2000; gap: 10px; }
+.mobile-btn { flex: 1; padding: 12px; background: var(--hw-blue); color: white; border: 1px solid white; border-radius: 6px; font-weight: bold; cursor: pointer; }
+
+/* LOMAKE */
 .form-section { background: white; padding: 25px; border-radius: 12px; border: 1px solid #e1e4e8; margin-bottom: 30px; }
 .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
 .form-group { display: flex; flex-direction: column; }
 .form-group label { font-size: 12px; font-weight: 700; color: #555; margin-bottom: 6px; text-transform: uppercase; }
 .form-group input { padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; }
-textarea { width: 100%; height: 80px; padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; box-sizing: border-box; resize: vertical; }
 
-.search-box { width: 100%; padding: 18px 25px; font-size: 18px; border: 2px solid var(--hw-blue); border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); outline: none; margin-bottom: 30px; }
+/* HAKU */
+.search-wrapper { position: relative; width: 100%; max-width: 800px; margin-bottom: 30px; }
+.search-box { width: 100%; padding: 18px 50px 18px 25px; font-size: 18px; border: 2px solid var(--hw-blue); border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); outline: none; box-sizing: border-box; }
+.search-clear { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 24px; color: #aaa; cursor: pointer; background: none; border: none; }
+.search-clear:hover { color: var(--hw-blue); }
 
-/* Paketit */
+/* PAKETIT */
 .pkg-container { background: white; border-radius: 12px; padding: 20px; border: 1px solid #e1e4e8; margin-bottom: 30px; }
 .pkg-grid { display: flex; gap: 12px; flex-wrap: wrap; }
 .pkg-btn { padding: 12px 20px; background: #edf2f7; color: var(--hw-dark); border: 1px solid #cbd5e0; border-radius: 8px; cursor: pointer; font-weight: 600; }
-.pkg-btn:hover { background: var(--hw-blue); color: white; }
 
-/* Tuotteet */
+/* TUOTTEET */
 .product-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #edf2f7; background: white; }
 .product-item.out { opacity: 0.5; background: #f0f0f0; }
 .qty-area { display: flex; align-items: center; gap: 10px; }
 .qty-btn { width: 36px; height: 36px; border: none; background: #edf2f7; border-radius: 50%; cursor: pointer; font-size: 20px; }
 .qty-input { width: 45px; text-align: center; border: 1px solid #cbd5e0; padding: 8px; font-weight: bold; border-radius: 6px; }
 
-/* Kori */
+/* KORI */
 .cart-sidebar { width: var(--sidebar-w); background: white; border-left: 1px solid #ddd; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; }
 .cart-header { background: var(--hw-green); color: white; padding: 20px; text-align: center; font-weight: bold; }
-.cart-item { padding: 12px; border-bottom: 1px solid #eee; background: white; }
 
-/* Ylläpito Paneeli */
+/* ADMIN PANEELI */
 #adminSection { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: #2d3748; color: white; padding: 15px; z-index: 5000; box-sizing: border-box; flex-wrap: wrap; gap: 15px; justify-content: center; align-items: center; }
 
-/* Modals */
-#pkgModal, #imgModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:20000; justify-content:center; align-items:center; }
+#pkgModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:20000; justify-content:center; align-items:center; }
 .modal-content { background:white; padding:30px; border-radius:12px; width:500px; max-width:90%; max-height:80vh; overflow-y:auto; }
 
-/* Ylös Nappi */
-#btnTop { position: fixed; bottom: 30px; right: 320px; background: var(--hw-blue); color: white; border: none; padding: 15px 20px; border-radius: 30px; display: none; z-index: 999; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+/* YLÖS-NAPPI */
+#btnTop { position: fixed; bottom: 30px; right: 300px; background: var(--hw-blue); color: white; border: none; padding: 15px 25px; border-radius: 30px; display: none; z-index: 999; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
 @media (max-width: 1100px) {
     .nav-sidebar, .cart-sidebar { position: fixed; left: -100%; top: 55px; z-index: 3000; width: 85%; height: calc(100vh - 55px); transition: 0.3s; }
     .cart-sidebar { right: -100%; left: auto; }
     .nav-sidebar.open { left: 0; }
     .cart-sidebar.open { right: 0; }
+    .mobile-bar { display: flex; }
     #btnTop { right: 20px; }
 }
 </style>
@@ -85,22 +94,16 @@ textarea { width: 100%; height: 80px; padding: 12px; border: 1px solid #cbd5e0; 
         <input id="adminUser" placeholder="Tunnus">
         <input id="adminPass" type="password" placeholder="Salasana">
         <button onclick="doAdminLogin()" style="width:100%; padding:12px; background:var(--hw-dark); color:white; border:none; border-radius:6px; cursor:pointer;">KIRJAUDU</button>
-        <button onclick="document.getElementById('adminLoginPopup').style.display='none'" style="margin-top:10px; background:none; border:none; color:red; cursor:pointer;">Peruuta</button>
-    </div>
-</div>
-
-<div id="pkgModal">
-    <div class="modal-content">
-        <h3 id="pkgModalTitle" style="color:var(--hw-blue); margin-top:0;"></h3>
-        <div id="pkgModalItems"></div>
-        <div style="margin-top:20px; display:flex; gap:10px;">
-            <button onclick="confirmPkgToCart()" style="flex:1; padding:15px; background:var(--hw-green); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">LISÄÄ KORIIN</button>
-            <button onclick="document.getElementById('pkgModal').style.display='none'" style="flex:1; padding:15px; background:#eee; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">PERUUTA</button>
-        </div>
+        <button onclick="document.getElementById('adminLoginPopup').style.display='none'" style="margin-top:10px; border:none; background:none; color:red; cursor:pointer;">Peruuta</button>
     </div>
 </div>
 
 <div id="appWrapper" style="display:none;">
+    <div class="mobile-bar">
+        <button class="mobile-btn" onclick="toggleSidebar('nav-sidebar')">☰ VALIKKO</button>
+        <button class="mobile-btn" onclick="toggleSidebar('cart-sidebar')">🛒 KORI (<span id="m-count">0</span>)</button>
+    </div>
+
     <div class="app-container">
         <nav id="nav-sidebar" class="nav-sidebar">
             <div class="nav-header">TUOTERYHMÄT</div>
@@ -120,15 +123,18 @@ textarea { width: 100%; height: 80px; padding: 12px; border: 1px solid #cbd5e0; 
                 </div>
                 <div style="margin-top:20px;">
                     <label style="font-size:12px; font-weight:700;">LISÄTIEDOT</label>
-                    <textarea id="f_lisatiedot" placeholder="Lisätiedot tilauksesta..."></textarea>
+                    <textarea id="f_lisatiedot" style="width:100%; height:60px; border-radius:8px; border:1px solid #cbd5e0; padding:10px;" placeholder="Lisätiedot tilauksesta..."></textarea>
                 </div>
                 <div style="margin-top:10px;">
                     <label style="font-size:12px; font-weight:700;">MUUT TUOTTEET</label>
-                    <textarea id="f_vapaat" placeholder="Nimi, kpl määrä..."></textarea>
+                    <textarea id="f_vapaat" style="width:100%; height:60px; border-radius:8px; border:1px solid #cbd5e0; padding:10px;" placeholder="Nimi, kpl määrä..."></textarea>
                 </div>
             </div>
 
-            <input id="filter" class="search-box" placeholder="Hae tuotteita..." oninput="render(this.value)">
+            <div id="search-anchor" class="search-wrapper">
+                <input id="filter" class="search-box" placeholder="Hae tuotteita..." oninput="render(this.value)">
+                <button class="search-clear" onclick="clearSearch()">×</button>
+            </div>
 
             <div class="pkg-container">
                 <div style="font-weight:bold; color:var(--hw-blue); margin-bottom:15px;">VALMIIT ASENNUSPAKETIT</div>
@@ -149,44 +155,32 @@ textarea { width: 100%; height: 80px; padding: 12px; border: 1px solid #cbd5e0; 
     </div>
 </div>
 
+<div id="pkgModal"><div class="modal-content"><h3 id="pkgModalTitle" style="color:var(--hw-blue); margin-top:0;"></h3><div id="pkgModalItems"></div><div style="margin-top:20px; display:flex; gap:10px;"><button onclick="confirmPkgToCart()" style="flex:1; padding:15px; background:var(--hw-green); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">LISÄÄ KORIIN</button><button onclick="document.getElementById('pkgModal').style.display='none'" style="flex:1; padding:15px; background:#eee; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">PERUUTA</button></div></div></div>
+
 <div id="adminSection">
-    <div style="font-weight:bold;">MUOKKAA SAATAVUUTTA:</div>
-    <input id="adminCode" placeholder="Tuotekoodi" style="padding:8px; border-radius:4px; border:none;">
+    <div style="font-weight:bold;">SAATAVUUS:</div>
+    <input id="adminCode" placeholder="Koodi" style="padding:8px; border-radius:4px; border:none; width:100px;">
     <label><input type="checkbox" id="adminOutOfStock"> LOPPU</label>
-    <input id="adminETA" placeholder="ETA (esim. vko 15)" style="padding:8px; border-radius:4px; border:none;">
+    <input id="adminETA" placeholder="ETA" style="padding:8px; border-radius:4px; border:none; width:100px;">
     <button onclick="saveStockStatus()" style="padding:8px 15px; background:var(--hw-green); color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">TALLENNA</button>
     <button onclick="document.getElementById('adminSection').style.display='none'" style="color:red; background:none; border:none; cursor:pointer; font-weight:bold;">SULJE X</button>
 </div>
 
-<button onclick="window.scrollTo({top:0, behavior:'smooth'})" id="btnTop">YLÖS ↑</button>
+<button onclick="scrollToSearch()" id="btnTop">YLÖS ↑</button>
 
 <script>
 const asennusPaketit = {
-    "Kotipizza": [
-        { code: "15490", qty: 1 }, { code: "26520", qty: 1 }, { code: "V00713", qty: 5 }, { code: "V00726", qty: 2 },
-        { code: "V02356", qty: 1 }, { code: "V41800", qty: 1 }, { code: "V02257", qty: 1 }, { code: "V03010", qty: 1 },
-        { code: "T00678", qty: 5 }, { code: "T00723", qty: 1 }, { code: "T41468", qty: 2 }, { code: "T00384", qty: 2 },
-        { code: "10172", qty: 1 }, { code: "T41002", qty: 2 }, { code: "T00609", qty: 2 }, { code: "T41101", qty: 2 }
-    ],
-    "Subway": [
-        { code: "15279", qty: 1 }, { code: "10160", qty: 1 }, { code: "26520", qty: 1 }, { code: "V00713", qty: 4 },
-        { code: "V00726", qty: 1 }, { code: "V00727", qty: 1 }, { code: "V02356", qty: 1 }, { code: "V41800", qty: 1 },
-        { code: "V02257", qty: 1 }, { code: "V03010", qty: 1 }, { code: "T00678", qty: 4 }, { code: "T00723", qty: 1 },
-        { code: "T41468", qty: 2 }, { code: "T00384", qty: 2 }, { code: "T41002", qty: 2 }, { code: "T00609", qty: 2 }, { code: "T41101", qty: 2 }
-    ],
-    "LD HIGHTOWER TISKIN ALLE": [
-        { code: "19814", qty: 1 }, { code: "30105", qty: 1 }, { code: "V02013", qty: 3 }, { code: "T02223", qty: 3 },
-        { code: "T02222", qty: 3 }, { code: "T41460", qty: 3 }, { code: "T41469", qty: 3 }, { code: "V02355", qty: 1 },
-        { code: "V03010", qty: 1 }, { code: "V02257", qty: 1 }, { code: "T00609", qty: 1 }, { code: "T41101", qty: 1 },
-        { code: "T41002", qty: 1 }, { code: "M01285", qty: 1 }, { code: "M01290", qty: 1 }, { code: "M01296", qty: 1 }
-    ]
+    "Kotipizza": [{code:"15490",qty:1},{code:"26520",qty:1},{code:"V00713",qty:5},{code:"V00726",qty:2},{code:"V02356",qty:1},{code:"V41800",qty:1},{code:"V02257",qty:1},{code:"V03010",qty:1},{code:"T00678",qty:5},{code:"T00723",qty:1},{code:"T41468",qty:2},{code:"T00384",qty:2},{code:"10172",qty:1},{code:"T41002",qty:2},{code:"T00609",qty:2},{code:"T41101",qty:2}],
+    "Subway": [{code:"15279",qty:1},{code:"10160",qty:1},{code:"26520",qty:1},{code:"V00713",qty:4},{code:"V00726",qty:1},{code:"V00727",qty:1},{code:"V02356",qty:1},{code:"V41800",qty:1},{code:"V02257",qty:1},{code:"V03010",qty:1},{code:"T00678",qty:4},{code:"T00723",qty:1},{code:"T41468",qty:2},{code:"T00384",qty:2},{code:"T41002",qty:2},{code:"T00609",qty:2},{code:"T41101",qty:2}],
+    "LD HIGHTOWER TISKIN ALLE": [{code:"19814",qty:1},{code:"30105",qty:1},{code:"V02013",qty:3},{code:"T02223",qty:3},{code:"T02222",qty:3},{code:"T41460",qty:3},{code:"T41469",qty:3},{code:"V02355",qty:1},{code:"V03010",qty:1},{code:"V02257",qty:1},{code:"T00609",qty:1},{code:"T41101",qty:1},{code:"T41002",qty:1},{code:"M01285",qty:1},{code:"M01290",qty:1},{code:"M01296",qty:1}]
 };
-
 const sallitut = {"tomppa":"Tomi7122","markku":"parkinson","jaakko":"vendingjaska","dan":"huoltodan","tommi":"nappie","samia":"koksmeny","bob":"nayri","jouni":"paju1","jussi":"paukku","sami":"ruoska","jarno":"kurnu"};
 
-let allData = {}; let cart = {}; let categories = []; let currentPkgItems = []; let stockStatus = {};
+let allData = {}; let cart = {}; let categories = []; let stockStatus = {}; let currentPkgItems = [];
 
-window.onscroll = () => { document.getElementById("btnTop").style.display = window.scrollY > 300 ? "block" : "none"; };
+window.onscroll = () => { document.getElementById("btnTop").style.display = window.scrollY > 400 ? "block" : "none"; };
+
+function toggleSidebar(id) { document.getElementById(id).classList.toggle('open'); }
 
 function doAppLogin() {
     const u = document.getElementById("uField").value.trim().toLowerCase();
@@ -194,7 +188,9 @@ function doAppLogin() {
     if (sallitut[u] === p) {
         document.getElementById("loginOverlay").style.display="none";
         document.getElementById("appWrapper").style.display="block";
-        loadStockStatus();
+        // Automaattinen päivämäärä
+        document.getElementById("f_pvm").valueAsDate = new Date();
+        loadLocalStock();
         loadFiles();
     } else { alert("Virhe!"); }
 }
@@ -210,18 +206,18 @@ async function loadFiles() {
     try {
         const [r1, r2] = await Promise.all([fetch("data.txt"), fetch("kategoriat.txt")]);
         if(r1.ok) {
-            const text = await r1.text();
+            const t = await r1.text();
             let cur = null;
-            text.split("\n").forEach(line => {
+            t.split("\n").forEach(line => {
                 let s = line.trim(); if(!s) return;
                 if(!/\d/.test(s.split(" ")[0])) { cur = s; allData[cur] = []; }
                 else if(cur) { allData[cur].push({code: s.split(" ")[0], name: s.substring(s.split(" ")[0].length).trim()}); }
             });
         }
         if(r2.ok) {
-            const text = await r2.text();
+            const t = await r2.text();
             let curM = null;
-            text.split("\n").forEach(line => {
+            t.split("\n").forEach(line => {
                 let s = line.trim(); if(!s) return;
                 if(line.startsWith("-")) { if(curM) curM.subs.push(s.substring(1)); }
                 else { curM = {name: s, subs: []}; categories.push(curM); }
@@ -229,6 +225,15 @@ async function loadFiles() {
         }
         renderPkgs(); renderNav(); render();
     } catch(e) { console.error(e); }
+}
+
+function clearSearch() {
+    document.getElementById("filter").value = "";
+    render("");
+}
+
+function scrollToSearch() {
+    document.getElementById("search-anchor").scrollIntoView({ behavior: "smooth" });
 }
 
 function renderPkgs() {
@@ -247,15 +252,7 @@ function openPkgModal(name) {
     currentPkgItems.forEach((item, index) => {
         let n = "Tuote " + item.code;
         for(let c in allData) { let f = allData[c].find(x => x.code === item.code); if(f) n = f.name; }
-        content.innerHTML += `
-            <div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee;">
-                <div><b>${item.code}</b><br>${n}</div>
-                <div class="qty-area">
-                    <button class="qty-btn" onclick="updatePkgItemQty(${index},-1)">-</button>
-                    <input class="qty-input" value="${item.qty}" readonly>
-                    <button class="qty-btn" onclick="updatePkgItemQty(${index},1)">+</button>
-                </div>
-            </div>`;
+        content.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee;"><div><b>${item.code}</b><br>${n}</div><div class="qty-area"><button class="qty-btn" onclick="updatePkgItemQty(${index},-1)">-</button><input class="qty-input" value="${item.qty}" readonly><button class="qty-btn" onclick="updatePkgItemQty(${index},1)">+</button></div></div>`;
     });
     modal.style.display = "flex";
 }
@@ -293,22 +290,14 @@ function render(filter = "") {
             block.innerHTML = `<div style="background:var(--hw-blue); color:white; padding:12px; margin:20px 0 10px 0; border-radius:8px; font-weight:bold;">${sub}</div>`;
             filt.forEach(p => {
                 let s = stockStatus[p.code] || {};
-                block.innerHTML += `
-                    <div class="product-item ${s.outOfStock ? 'out' : ''}">
-                        <div style="flex:1"><b>${p.name}</b><br><small>${p.code}</small> ${s.outOfStock ? '<b style="color:red">LOPPU!</b>' : ''} ${s.eta ? '<br><i>ETA: '+s.eta+'</i>' : ''}</div>
-                        <div class="qty-area">
-                            <button class="qty-btn" onclick="updateQty('${p.code}','${p.name}',-1)">-</button>
-                            <input class="qty-input" id="q_${p.code}" value="${cart[p.code]?.qty || 0}" readonly>
-                            <button class="qty-btn" onclick="updateQty('${p.code}','${p.name}',1)">+</button>
-                        </div>
-                    </div>`;
+                block.innerHTML += `<div class="product-item ${s.outOfStock ? 'out' : ''}"><div style="flex:1"><b>${p.name}</b><br><small>${p.code}</small> ${s.outOfStock ? '<b style="color:red">LOPPU!</b>' : ''} ${s.eta ? '<br><i>ETA: '+s.eta+'</i>' : ''}</div><div class="qty-area"><button class="qty-btn" onclick="updateQty('${p.code}','${p.name}',-1)">-</button><input class="qty-input" id="q_${p.code}" value="${cart[p.code]?.qty || 0}" readonly><button class="qty-btn" onclick="updateQty('${p.code}','${p.name}',1)">+</button></div></div>`;
             });
             list.appendChild(block);
         });
     });
 }
 
-function updateQty(code, name, delta, skipRelated = false) {
+function updateQty(code, name, delta, skipConfirm = false) {
     if(!cart[code]) {
         if(!name) { for(let c in allData) { let p = allData[c].find(x => x.code === code); if(p) name = p.name; } }
         cart[code] = { code, name: name || "Tuote " + code, qty: 0 };
@@ -322,25 +311,18 @@ function updateQty(code, name, delta, skipRelated = false) {
 function renderCart() {
     const div = document.getElementById("basket-items"); div.innerHTML = "";
     Object.values(cart).forEach(i => {
-        div.innerHTML += `
-            <div class="cart-item">
-                <div style="font-weight:bold; margin-bottom:5px;">${i.code} - ${i.name}</div>
-                <div class="qty-area" style="justify-content:flex-end;">
-                    <button class="qty-btn" style="width:28px; height:28px;" onclick="updateQty('${i.code}','${i.name}',-1)">-</button>
-                    <input class="qty-input" style="width:35px; padding:5px;" value="${i.qty}" readonly>
-                    <button class="qty-btn" style="width:28px; height:28px;" onclick="updateQty('${i.code}','${i.name}',1)">+</button>
-                </div>
-            </div>`;
+        div.innerHTML += `<div class="cart-item"><div style="font-weight:bold; margin-bottom:5px;">${i.code} - ${i.name}</div><div class="qty-area" style="justify-content:flex-end;"><button class="qty-btn" style="width:28px; height:28px;" onclick="updateQty('${i.code}','${i.name}',-1)">-</button><input class="qty-input" style="width:35px; padding:5px;" value="${i.qty}" readonly><button class="qty-btn" style="width:28px; height:28px;" onclick="updateQty('${i.code}','${i.name}',1)">+</button></div></div>`;
     });
     document.getElementById("basket-count").textContent = Object.values(cart).length;
+    document.getElementById("m-count").textContent = Object.values(cart).length;
 }
 
 function jumpTo(id) {
     const el = document.getElementById(id);
-    if(el) { el.scrollIntoView({behavior:"smooth"}); }
+    if(el) { el.scrollIntoView({behavior:"smooth"}); document.getElementById("nav-sidebar").classList.remove("open"); }
 }
 
-function loadStockStatus() { try { const r = localStorage.getItem("stockStatus"); if(r) stockStatus = JSON.parse(r); } catch(e){} }
+function loadLocalStock() { try { const r = localStorage.getItem("stockStatus"); if(r) stockStatus = JSON.parse(r); } catch(e){} }
 function saveStockStatus() {
     const c = document.getElementById("adminCode").value.trim(); if(!c) return;
     stockStatus[c] = { outOfStock: document.getElementById("adminOutOfStock").checked, eta: document.getElementById("adminETA").value };
@@ -348,11 +330,7 @@ function saveStockStatus() {
 }
 
 function finalSubmit() {
-    const f = {
-        t: document.getElementById("f_tilaaja").value, v: document.getElementById("f_varasto").value,
-        p: document.getElementById("f_pvm").value, tapa: document.getElementById("f_tapa").value,
-        o: document.getElementById("f_osoite").value, n: document.getElementById("f_postinro").value, k: document.getElementById("f_paikka").value
-    };
+    const f = { t: document.getElementById("f_tilaaja").value, v: document.getElementById("f_varasto").value, p: document.getElementById("f_pvm").value, tapa: document.getElementById("f_tapa").value, o: document.getElementById("f_osoite").value, n: document.getElementById("f_postinro").value, k: document.getElementById("f_paikka").value };
     if(!f.t || !f.v || !f.p || !f.tapa || !f.o || !f.n || !f.k) return alert("Täytä kaikki tiedot!");
     const subject = `Varaosatilaus - ${f.t} - ${f.v}`;
     let body = `Tilaaja: ${f.t}\nVarastonumero: ${f.v}\nPäivämäärä: ${f.p}\nToimitustapa: ${f.tapa}\nOsoite: ${f.o}, ${f.n} ${f.k}\n\nTUOTTEET:\n`;
