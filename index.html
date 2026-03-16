@@ -5,79 +5,58 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hartwall Varaosatilaus</title>
 <style>
-:root { 
-    --hw-blue:#004593; 
-    --hw-dark:#002d62;
-    --hw-green:#28a745; 
-    --sidebar-w: 280px;
-}
+:root { --hw-blue:#004593; --hw-dark:#002d62; --hw-green:#28a745; --sidebar-w: 280px; }
 body { font-family:'Segoe UI',sans-serif; margin:0; background:#f0f2f5; font-size:14px; color:#333; padding-bottom: 60px;}
 
-/* Kirjautumiset */
-#loginOverlay, #adminLoginPopup { position:fixed; top:0; left:0; width:100%; height:100%; background:var(--hw-blue); display:flex; justify-content:center; align-items:center; z-index:10000; }
+/* Kirjautuminen */
+#loginOverlay { position:fixed; top:0; left:0; width:100%; height:100%; background:var(--hw-blue); display:flex; justify-content:center; align-items:center; z-index:10000; }
 .login-box { background:white; padding:30px; border-radius:15px; width:300px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.5); }
 
-/* Layout */
 .app-container { display: flex; min-height: 100vh; }
-
-/* NAVIGAATIO */
-.nav-sidebar { 
-    width: var(--sidebar-w); background: white; border-right: 1px solid #ddd; 
-    position: sticky; top: 0; height: 100vh; overflow-y: auto; flex-shrink: 0; transition: 0.3s;
-}
+.nav-sidebar { width: var(--sidebar-w); background: white; border-right: 1px solid #ddd; position: sticky; top: 0; height: 100vh; overflow-y: auto; flex-shrink: 0; transition: 0.3s; }
 .nav-header { background: var(--hw-dark); color: white; padding: 15px; font-weight: bold; }
 .nav-item { border-bottom: 1px solid #eee; }
 .nav-main-cat { padding: 12px 15px; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; }
 .nav-sub-list { display: none; background: #f9f9f9; padding-bottom: 10px; }
-.nav-sub-item { padding: 8px 15px 8px 30px; font-size: 13px; cursor: pointer; }
-.nav-sub-item:hover { color: var(--hw-blue); text-decoration: underline; }
 .nav-item.active .nav-sub-list { display: block; }
 
-/* KESKIALUE */
 .main-content { flex: 1; padding: 20px; min-width: 0; }
-
-/* LOMAKE */
 .form-section { background: white; padding: 20px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 20px; }
 .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
 .form-group { display: flex; flex-direction: column; }
 .form-group label { font-size: 11px; font-weight: bold; color: var(--hw-blue); margin-bottom: 2px; }
 .form-group input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
-.full-width { grid-column: 1 / -1; margin-top: 10px; }
-textarea { width: 100%; height: 70px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; resize: vertical; }
+.form-group input:required { border-left: 3px solid red; }
 
-/* TUOTTEET */
-.product-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #eee; background: white; }
-.product-item.out { opacity: 0.5; background: #fff1f1; }
+/* Asennuspaketit laatikko */
+#pkg-area { background: #fff9c4; border: 2px solid #fbc02d; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+.pkg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 10px; }
+.pkg-btn { padding: 10px; background: var(--hw-blue); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 11px; font-weight: bold; }
+
+.product-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee; background: white; }
 .qty-area { display: flex; align-items: center; gap: 8px; }
-.qty-btn { width: 35px; height: 35px; border: none; background: #eee; border-radius: 4px; cursor: pointer; font-size: 20px; }
-.qty-input { width: 45px; text-align: center; border: 1px solid #ccc; padding: 6px; font-weight: bold; border-radius: 4px; }
+.qty-btn { width: 32px; height: 32px; border: none; background: #eee; border-radius: 4px; cursor: pointer; font-size: 18px; }
+.qty-input { width: 40px; text-align: center; border: 1px solid #ccc; padding: 4px; font-weight: bold; }
 
-/* ASENNUSPAKETIT */
-.pkg-container { background: #fff9c4; border: 2px solid #fbc02d; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
-.pkg-item-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-bottom: 5px; border-bottom: 1px solid rgba(0,0,0,0.05); }
-.pkg-btn { background: var(--hw-blue); color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-
-/* KORI */
-.cart-sidebar { width: var(--sidebar-w); background: white; border-left: 1px solid #ddd; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; transition: 0.3s; }
+/* Kori */
+.cart-sidebar { width: var(--sidebar-w); background: white; border-left: 1px solid #ddd; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; }
 .cart-header { background: var(--hw-green); color: white; padding: 15px; text-align: center; font-weight: bold; }
+.cart-item { padding: 10px; border-bottom: 1px solid #eee; font-size: 12px; }
 
-/* YLLÄPITO PANEELI */
-#adminSection { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: #333; color: white; padding: 15px; z-index: 5000; box-sizing: border-box; flex-wrap: wrap; gap: 15px; justify-content: center; align-items: center; }
-
-/* MOBIILI */
+/* Mobiili */
 .mobile-bar { display: none; background: var(--hw-dark); padding: 10px; position: sticky; top: 0; z-index: 2000; gap: 10px; }
-.mobile-btn { flex: 1; padding: 12px; background: var(--hw-blue); color: white; border: 1px solid white; border-radius: 6px; font-weight: bold; }
-
 @media (max-width: 1100px) {
-    .nav-sidebar, .cart-sidebar { position: fixed; left: -100%; top: 55px; z-index: 3000; width: 85%; height: calc(100vh - 55px); }
+    .nav-sidebar, .cart-sidebar { position: fixed; left: -100%; top: 55px; z-index: 3000; width: 85%; height: calc(100vh - 55px); transition: 0.3s; }
     .cart-sidebar { left: auto; right: -100%; }
     .nav-sidebar.open { left: 0; }
     .cart-sidebar.open { right: 0; }
     .mobile-bar { display: flex; }
 }
 
-#btnTop { position: fixed; bottom: 80px; right: 20px; background: var(--hw-blue); color: white; border: 2px solid white; padding: 12px 20px; border-radius: 30px; display: none; z-index: 999; font-weight: bold; cursor: pointer; }
-#imgModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:20000; justify-content:center; align-items:center; }
+/* Related Popup */
+#relatedOverlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:12000; justify-content:center; align-items:center; }
+#relatedPopup { background:white; width:400px; max-width:90%; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.3); overflow:hidden; }
+.related-item { padding:12px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; }
 </style>
 </head>
 <body>
@@ -85,26 +64,24 @@ textarea { width: 100%; height: 70px; padding: 10px; border: 1px solid #ccc; bor
 <div id="loginOverlay">
     <div class="login-box">
         <h2 style="color:var(--hw-blue)">Hartwall Varaosat</h2>
-        <input id="uField" placeholder="Käyttäjätunnus" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:5px;">
-        <input id="pField" type="password" placeholder="Salasana" style="width:100%; padding:10px; margin-bottom:20px; border:1px solid #ccc; border-radius:5px;">
-        <button onclick="doAppLogin()" style="width:100%; padding:12px; background:var(--hw-blue); color:white; border:none; cursor:pointer; font-weight:bold; border-radius:5px;">KIRJAUDU SISÄÄN</button>
-    </div>
-</div>
-
-<div id="adminLoginPopup" style="display:none;">
-    <div class="login-box">
-        <h3>Ylläpito</h3>
-        <input id="adminUser" placeholder="Tunnus" style="width:100%; padding:10px; margin-bottom:10px;">
-        <input id="adminPass" type="password" placeholder="Salasana" style="width:100%; padding:10px; margin-bottom:20px;">
-        <button onclick="doAdminLogin()" style="width:100%; padding:10px; background:var(--hw-dark); color:white; border:none; cursor:pointer;">KIRJAUDU</button>
-        <button onclick="document.getElementById('adminLoginPopup').style.display='none'" style="margin-top:10px; border:none; background:none; color:red; cursor:pointer;">Peruuta</button>
+        <input id="uField" placeholder="Käyttäjätunnus" style="width:100%; padding:10px; margin-bottom:10px;">
+        <input id="pField" type="password" placeholder="Salasana" style="width:100%; padding:10px; margin-bottom:20px;">
+        <button onclick="doAppLogin()" style="width:100%; padding:12px; background:var(--hw-blue); color:white; border:none; cursor:pointer; font-weight:bold;">KIRJAUDU SISÄÄN</button>
     </div>
 </div>
 
 <div id="appWrapper" style="display:none;">
+    <div id="relatedOverlay">
+        <div id="relatedPopup">
+            <div style="background:var(--hw-blue); color:white; padding:15px; font-weight:bold; text-align:center;">Suositellut lisäosat</div>
+            <div id="relatedContent" style="padding:15px; max-height:300px; overflow-y:auto;"></div>
+            <button onclick="document.getElementById('relatedOverlay').style.display='none'" style="width:100%; padding:15px; border:none; background:#eee; font-weight:bold; cursor:pointer;">SULJE</button>
+        </div>
+    </div>
+
     <div class="mobile-bar">
-        <button class="mobile-btn" onclick="toggleSidebar('nav-sidebar')">☰ VALIKKO</button>
-        <button class="mobile-btn" onclick="toggleSidebar('cart-sidebar')">🛒 KORI (<span id="m-count">0</span>)</button>
+        <button onclick="toggleSidebar('nav-sidebar')" style="flex:1; padding:10px;">☰ VALIKKO</button>
+        <button onclick="toggleSidebar('cart-sidebar')" style="flex:1; padding:10px;">🛒 KORI (<span id="m-count">0</span>)</button>
     </div>
 
     <div class="app-container">
@@ -116,28 +93,26 @@ textarea { width: 100%; height: 70px; padding: 10px; border: 1px solid #ccc; bor
         <main class="main-content">
             <div class="form-section">
                 <div class="form-grid">
-                    <div class="form-group"><label>TILAAJA *</label><input id="f_tilaaja"></div>
-                    <div class="form-group"><label>VARASTONRO *</label><input id="f_varasto"></div>
-                    <div class="form-group"><label>PÄIVÄMÄÄRÄ</label><input id="f_pvm" type="date"></div>
-                    <div class="form-group"><label>TOIMITUSTAPA</label><input id="f_tapa"></div>
-                    <div class="form-group"><label>OSOITE</label><input id="f_osoite"></div>
-                    <div class="form-group"><label>POSTINRO</label><input id="f_postinro"></div>
-                    <div class="form-group"><label>PAIKKAKUNTA</label><input id="f_paikka"></div>
+                    <div class="form-group"><label>TILAAJA *</label><input id="f_tilaaja" required></div>
+                    <div class="form-group"><label>VARASTONRO *</label><input id="f_varasto" required></div>
+                    <div class="form-group"><label>PÄIVÄMÄÄRÄ *</label><input id="f_pvm" type="date" required></div>
+                    <div class="form-group"><label>TOIMITUSTAPA *</label><input id="f_tapa" required></div>
+                    <div class="form-group"><label>OSOITE *</label><input id="f_osoite" required></div>
+                    <div class="form-group"><label>POSTINUMERO *</label><input id="f_postinro" required></div>
+                    <div class="form-group"><label>PAIKKAKUNTA *</label><input id="f_paikka" required></div>
                 </div>
-                <div class="full-width">
-                    <label style="font-size:11px; font-weight:bold; color:var(--hw-blue)">LISÄTIEDOT</label>
-                    <textarea id="f_lisatiedot" placeholder="Kirjoita lisätiedot tähän..."></textarea>
-                </div>
-                <div class="full-width">
-                    <label style="font-size:11px; font-weight:bold; color:var(--hw-blue)">MUUT TUOTTEET (Nimi, kpl määrä...)</label>
-                    <textarea id="f_vapaat" placeholder="Jos tuotetta ei löydy listalta, lisää se tähän muodossa: Nimi, kpl määrä..."></textarea>
-                </div>
+                <textarea id="f_lisatiedot" placeholder="Lisätiedot..." style="width:100%; margin-top:10px; height:60px;"></textarea>
+                <textarea id="f_vapaat" placeholder="Nimi, kpl määrä..." style="width:100%; margin-top:5px; height:60px;"></textarea>
+            </div>
+
+            <div id="pkg-area">
+                <strong>ASENNUSPAKETIT</strong>
+                <div class="pkg-grid" id="pkg-buttons"></div>
             </div>
 
             <select id="top-cat-select" onchange="jumpTo(this.value)" style="width:100%; padding:15px; margin-bottom:15px; border:2px solid var(--hw-blue); font-weight:bold; border-radius:6px;"></select>
             <input id="filter" style="width:100%; padding:12px; margin-bottom:20px; box-sizing:border-box;" placeholder="Hae tuotteita..." oninput="render(this.value)">
 
-            <div id="pkg-area"></div>
             <div id="main-list"></div>
         </main>
 
@@ -146,34 +121,47 @@ textarea { width: 100%; height: 70px; padding: 10px; border: 1px solid #ccc; bor
             <div id="basket-items" style="flex:1; overflow-y:auto; padding:10px;"></div>
             <div style="padding:15px; border-top:1px solid #ddd;">
                 <button onclick="finalSubmit()" style="width:100%; padding:15px; background:var(--hw-green); color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">LÄHETÄ TILAUS</button>
-                <button onclick="document.getElementById('adminLoginPopup').style.display='flex'" style="width:100%; margin-top:10px; background:none; border:none; color:#bbb; font-size:10px; cursor:pointer;">Ylläpito</button>
             </div>
         </aside>
     </div>
 </div>
 
-<div id="adminSection">
-    <div style="font-weight:bold;">YLLÄPITO:</div>
-    <input id="adminCode" placeholder="Tuotekoodi" style="padding:5px; width:100px;">
-    <label><input type="checkbox" id="adminOutOfStock"> Loppu</label>
-    <input id="adminETA" placeholder="ETA" style="padding:5px; width:80px;">
-    <button onclick="saveStock()" style="padding:5px 15px; background:var(--hw-green); border:none; color:white; cursor:pointer;">Tallenna</button>
-    <button onclick="document.getElementById('adminSection').style.display='none'" style="color:red; background:none; border:none; cursor:pointer; font-weight:bold;">SULJE X</button>
-</div>
-
-<button onclick="window.scrollTo({top:0, behavior:'smooth'})" id="btnTop">YLÖS ↑</button>
-<div id="imgModal" onclick="if(event.target===this)this.style.display='none'"><img id="modalImage" style="max-width:90%; max-height:90%;"></div>
-
 <script>
-const sallitut = {"tomppa":"Tomi7122","markku":"parkinson","jaakko":"vendingjaska","dan":"huoltodan","tommi":"nappie","samia":"koksmeny","bob":"nayri","jouni":"paju1","jussi":"paukku","sami":"ruoska","jarno":"kurnu"};
-const paketitData = {
-    "ASENNUSPAKETTI OLUT": ["3119", "5670", "5671", "3348", "3349", "1274", "3127", "4225", "4223", "3370", "3121", "5644", "3123"],
-    "ASENNUSPAKETTI POST-MIX": ["3119", "5670", "5671", "3348", "3349", "1274", "3127", "4225", "4223", "3370", "3121", "3123"]
+// TUNNUKSET JA DATA ALKUPERÄISESTÄ TIEDOSTOSTA 
+const asennusPaketit = {
+    "Kotipizza": [
+        { code: "15490", qty: 1 }, { code: "26520", qty: 1 }, { code: "V00713", qty: 5 }, { code: "V00726", qty: 2 },
+        { code: "V02356", qty: 1 }, { code: "V41800", qty: 1 }, { code: "V02257", qty: 1 }, { code: "V03010", qty: 1 },
+        { code: "T00678", qty: 5 }, { code: "T00723", qty: 1 }, { code: "T41468", qty: 2 }, { code: "T00384", qty: 2 },
+        { code: "10172", qty: 1 }, { code: "T41002", qty: 2 }, { code: "T00609", qty: 2 }, { code: "T41101", qty: 2 }
+    ],
+    "Subway": [
+        { code: "15279", qty: 1 }, { code: "10160", qty: 1 }, { code: "26520", qty: 1 }, { code: "V00713", qty: 4 },
+        { code: "V00726", qty: 1 }, { code: "V00727", qty: 1 }, { code: "V02356", qty: 1 }, { code: "V41800", qty: 1 },
+        { code: "V02257", qty: 1 }, { code: "V03010", qty: 1 }, { code: "T00678", qty: 4 }, { code: "T00723", qty: 1 },
+        { code: "T41468", qty: 2 }, { code: "T00384", qty: 2 }, { code: "T41002", qty: 2 }, { code: "T00609", qty: 2 }, { code: "T41101", qty: 2 }
+    ],
+    "LD Hightower tiskin alle": [
+        { code: "19814", qty: 1 }, { code: "30105", qty: 1 }, { code: "V02013", qty: 3 }, { code: "T02223", qty: 3 },
+        { code: "T02222", qty: 3 }, { code: "T41460", qty: 3 }, { code: "T41469", qty: 3 }, { code: "V02355", qty: 1 },
+        { code: "V03010", qty: 1 }, { code: "V02257", qty: 1 }, { code: "T00609", qty: 1 }, { code: "T41101", qty: 1 },
+        { code: "T41002", qty: 1 }, { code: "M01285", qty: 1 }, { code: "M01290", qty: 1 }, { code: "M01296", qty: 1 }
+    ]
 };
 
-let allData = {}; let cart = {}; let categories = []; let stockStatus = {};
+const relatedItems = {
+    "V02363": ["V03010","V02257","V02351","T00457","T02256","T41430"],
+    "V02355": ["V03010","V02257","V02351","T00457","T02256","T41430"],
+    "V02356": ["V03010","V02257","V02351","T00457","T02256","T41430"],
+    "V02340": ["V03010","V02257","V02351","T00457","T02256","T41430"],
+    "V02351": ["V03010","V02257","V02351","T00457","T02256","T41430"],
+    "V02364": ["V03010","V02257","V02351","T00457","T02256","T41430"]
+};
 
-window.onscroll = () => { document.getElementById("btnTop").style.display = window.scrollY > 300 ? "block" : "none"; };
+const sallitut = {"tomppa":"Tomi7122","markku":"parkinson","jaakko":"vendingjaska","dan":"huoltodan","tommi":"nappie","samia":"koksmeny","bob":"nayri","jouni":"paju1","jussi":"paukku","sami":"ruoska","jarno":"kurnu"};
+
+let allData = {}; let cart = {}; let categories = [];
+
 function toggleSidebar(id) { document.getElementById(id).classList.toggle('open'); }
 
 function doAppLogin() {
@@ -183,47 +171,45 @@ function doAppLogin() {
         document.getElementById("loginOverlay").style.display="none";
         document.getElementById("appWrapper").style.display="block";
         document.getElementById("f_pvm").valueAsDate = new Date();
-        loadLocalStock();
-        loadAllDataFiles();
-    } else { alert("Kirjautuminen epäonnistui!"); }
-}
-
-function doAdminLogin() {
-    if (document.getElementById("adminUser").value === "admin" && document.getElementById("adminPass").value === "hartwall") {
-        document.getElementById("adminLoginPopup").style.display = "none";
-        document.getElementById("adminSection").style.display = "flex";
+        loadDataFiles();
     } else { alert("Virhe!"); }
 }
 
-async function loadAllDataFiles() {
+async function loadDataFiles() {
     try {
-        const r1 = await fetch("data.txt");
-        const r2 = await fetch("kategoriat.txt");
-        
+        const [r1, r2] = await Promise.all([fetch("data.txt"), fetch("kategoriat.txt")]);
         if(r1.ok) {
-            const text = await r1.text();
-            let currentCat = null;
-            text.split("\n").forEach(line => {
-                let s = line.trim(); if(!s) return;
-                if(!/\d/.test(s.split(" ")[0])) { currentCat = s; allData[currentCat] = []; }
-                else if(currentCat) {
-                    allData[currentCat].push({code: s.split(" ")[0], name: s.substring(s.split(" ")[0].length).trim()});
-                }
+            const t = await r1.text();
+            let cur = null;
+            t.split("\n").forEach(l => {
+                let s = l.trim(); if(!s) return;
+                if(!/\d/.test(s.split(" ")[0])) { cur = s; allData[cur] = []; }
+                else if(cur) { allData[cur].push({code: s.split(" ")[0], name: s.substring(s.split(" ")[0].length).trim()}); }
             });
         }
-        
         if(r2.ok) {
-            const text = await r2.text();
-            let currentMain = null;
-            text.split("\n").forEach(line => {
-                let s = line.trim(); if(!s) return;
-                if(line.startsWith("-")) { if(currentMain) currentMain.subs.push(s.substring(1)); }
-                else { currentMain = {name: s, subs: []}; categories.push(currentMain); }
+            const t = await r2.text();
+            let curM = null;
+            t.split("\n").forEach(l => {
+                let s = l.trim(); if(!s) return;
+                if(l.startsWith("-")) { if(curM) curM.subs.push(s.substring(1)); }
+                else { curM = {name: s, subs: []}; categories.push(curM); }
             });
         }
-        renderNav();
-        render();
-    } catch(e) { console.error("Virhe ladattaessa tiedostoja", e); }
+        renderPkgs(); renderNav(); render();
+    } catch(e) { console.error(e); }
+}
+
+function renderPkgs() {
+    const div = document.getElementById("pkg-buttons"); div.innerHTML = "";
+    Object.keys(asennusPaketit).forEach(name => {
+        div.innerHTML += `<button class="pkg-btn" onclick="addPkgToCart('${name}')">${name}</button>`;
+    });
+}
+
+function addPkgToCart(name) {
+    asennusPaketit[name].forEach(item => { updateQty(item.code, "", item.qty, true); });
+    alert(name + " purettu koriin.");
 }
 
 function renderNav() {
@@ -235,7 +221,7 @@ function renderNav() {
         div.innerHTML = `<div class="nav-main-cat" onclick="this.parentElement.classList.toggle('active')">${c.name} <span>▾</span></div>`;
         let subDiv = document.createElement("div"); subDiv.className = "nav-sub-list";
         c.subs.forEach(s => {
-            subDiv.innerHTML += `<div class="nav-sub-item" onclick="jumpTo('${s}')">${s}</div>`;
+            subDiv.innerHTML += `<div style="padding:8px 30px; cursor:pointer;" onclick="jumpTo('${s}')">${s}</div>`;
             sel.innerHTML += `<option value="${s}">${s}</option>`;
         });
         div.appendChild(subDiv); nav.appendChild(div);
@@ -243,110 +229,102 @@ function renderNav() {
 }
 
 function render(filter = "") {
-    const list = document.getElementById("main-list");
-    const pkgArea = document.getElementById("pkg-area");
-    list.innerHTML = ""; pkgArea.innerHTML = "";
-
-    // ASENNUSPAKETTIEN NÄYTTÄMINEN
-    const pkgKey = Object.keys(allData).find(k => k.includes("ASENNUSPAKETIT"));
-    if(!filter && pkgKey && allData[pkgKey]) {
-        let cont = document.createElement("div"); cont.className = "pkg-container";
-        cont.innerHTML = "<strong>ASENNUSPAKETIT</strong>";
-        allData[pkgKey].forEach(p => {
-            cont.innerHTML += `
-                <div class="pkg-item-row">
-                    <span>${p.name}</span>
-                    <button class="pkg-btn" onclick="addPkg('${p.name}')">Lisää koriin</button>
-                </div>`;
-        });
-        pkgArea.appendChild(cont);
-    }
-
+    const list = document.getElementById("main-list"); list.innerHTML = "";
     categories.forEach(c => {
         c.subs.forEach(sub => {
             let prods = allData[sub] || [];
-            let filt = prods.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()) || p.code.includes(filter));
+            let filt = prods.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()) || p.code.toLowerCase().includes(filter.toLowerCase()));
             if(filt.length === 0) return;
-            
             let block = document.createElement("div"); block.id = sub;
             block.innerHTML = `<div style="background:var(--hw-blue); color:white; padding:10px; margin:20px 0 10px 0; border-radius:4px; font-weight:bold;">${sub}</div>`;
-            
             filt.forEach(p => {
-                let s = stockStatus[p.code] || {};
-                let row = document.createElement("div"); row.className = "product-item" + (s.out ? " out" : "");
-                row.innerHTML = `
-                    <div style="flex:1; cursor:pointer;" onclick="openImg('${p.code}')">
-                        <div style="font-weight:bold; color:var(--hw-blue)">${p.name}</div>
-                        <div style="font-size:12px; color:#666">${p.code} ${s.out ? '<b style="color:red">LOPPU!</b>' : ''} ${s.eta ? ' (ETA: '+s.eta+')' : ''}</div>
-                    </div>
-                    <div class="qty-area">
-                        <button class="qty-btn" onclick="updateQty('${p.code}','${p.name}',-1)">-</button>
-                        <input class="qty-input" id="q_${p.code}" value="${cart[p.code]?.qty || 0}" readonly>
-                        <button class="qty-btn" onclick="updateQty('${p.code}','${p.name}', 1)">+</button>
+                block.innerHTML += `
+                    <div class="product-item">
+                        <div style="flex:1"><b>${p.name}</b><br><small>${p.code}</small></div>
+                        <div class="qty-area">
+                            <button class="qty-btn" onclick="updateQty('${p.code}','${p.name}',-1)">-</button>
+                            <input class="qty-input" id="q_${p.code}" value="${cart[p.code]?.qty || 0}" readonly>
+                            <button class="qty-btn" onclick="updateQty('${p.code}','${p.name}',1)">+</button>
+                        </div>
                     </div>`;
-                block.appendChild(row);
             });
             list.appendChild(block);
         });
     });
 }
 
-function addPkg(pkgName) {
-    let codes = paketitData[pkgName];
-    if(!codes) {
-        // Yritetään etsiä koodit, jos ne on listattu suoraan nimessä tai data.txt:ssä on joku logiikka
-        alert("Paketin sisältöä ei löytynyt määrityksistä.");
-        return;
-    }
-    codes.forEach(c => {
-        let name = "Tuote " + c;
-        for(let cat in allData) {
-            let found = allData[cat].find(x => x.code === c);
-            if(found) { name = found.name; break; }
+function updateQty(code, name, delta, skipRelated = false) {
+    if(!cart[code]) {
+        if(!name) { // Haetaan nimi jos se puuttuu (paketit)
+            for(let cat in allData) { let p = allData[cat].find(x => x.code === code); if(p) { name = p.name; break; } }
         }
-        updateQty(c, name, 1);
-    });
-    alert("Kaikki paketin " + pkgName + " osat lisätty koriin!");
-}
-
-function updateQty(code, name, delta) {
-    if(!cart[code]) cart[code] = { code, name, qty: 0 };
+        cart[code] = { code, name: name || "Tuote " + code, qty: 0 };
+    }
+    
+    if(delta > 0 && relatedItems[code] && !skipRelated) openRelatedPopup(code);
+    
     cart[code].qty += delta;
     if(cart[code].qty <= 0) delete cart[code];
-    if(document.getElementById("q_"+code)) document.getElementById("q_"+code).value = cart[code]?.qty || 0;
     
-    let div = document.getElementById("basket-items"); div.innerHTML = "";
+    let el = document.getElementById("q_"+code); if(el) el.value = cart[code]?.qty || 0;
+    renderCart();
+}
+
+function openRelatedPopup(parentCode) {
+    const content = document.getElementById("relatedContent"); content.innerHTML = "";
+    relatedItems[parentCode].forEach(relCode => {
+        let relName = "";
+        for (let cat in allData) { let p = allData[cat].find(x => x.code === relCode); if (p) { relName = p.name; break; } }
+        content.innerHTML += `
+            <div class="related-item">
+                <div style="flex:1;"><b>${relCode}</b><br>${relName}</div>
+                <button onclick="updateQty('${relCode}', '${relName}', 1, true)" style="background:var(--hw-green); color:white; border:none; padding:8px; border-radius:6px; cursor:pointer; font-weight:bold;">Lisää</button>
+            </div>`;
+    });
+    document.getElementById("relatedOverlay").style.display = "flex";
+}
+
+function renderCart() {
+    const div = document.getElementById("basket-items"); div.innerHTML = "";
     Object.values(cart).forEach(i => {
-        div.innerHTML += `<div style="padding:8px; border-bottom:1px solid #eee; font-size:13px;"><b>${i.qty} kpl</b> - ${i.name} (${i.code})</div>`;
+        div.innerHTML += `
+            <div class="cart-item">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div><b>${i.code}</b><br>${i.name}</div>
+                    <div class="qty-area">
+                        <button class="qty-btn" onclick="updateQty('${i.code}','${i.name}',-1)">-</button>
+                        <input class="qty-input" value="${i.qty}" readonly>
+                        <button class="qty-btn" onclick="updateQty('${i.code}','${i.name}',1)">+</button>
+                    </div>
+                </div>
+            </div>`;
     });
     document.getElementById("basket-count").textContent = Object.values(cart).length;
     document.getElementById("m-count").textContent = Object.values(cart).length;
 }
 
-function jumpTo(id) { 
+function jumpTo(id) {
     const el = document.getElementById(id);
     if(el) { el.scrollIntoView({behavior:"smooth"}); document.getElementById("nav-sidebar").classList.remove('open'); }
 }
 
-function openImg(c) { document.getElementById("modalImage").src = `images/${c}.png`; document.getElementById("imgModal").style.display = "flex"; }
-function loadLocalStock() { try { let r = localStorage.getItem("hartwall_stock_status"); if(r) stockStatus = JSON.parse(r); } catch(e){} }
-function saveStock() {
-    let c = document.getElementById("adminCode").value.trim(); if(!c) return;
-    stockStatus[c] = { out: document.getElementById("adminOutOfStock").checked, eta: document.getElementById("adminETA").value };
-    localStorage.setItem("hartwall_stock_status", JSON.stringify(stockStatus)); render(); alert("Tallennettu!");
-}
-
 function finalSubmit() {
-    let f = { 
+    const f = {
         t: document.getElementById("f_tilaaja").value, v: document.getElementById("f_varasto").value,
         p: document.getElementById("f_pvm").value, tapa: document.getElementById("f_tapa").value,
-        o: document.getElementById("f_osoite").value, n: document.getElementById("f_postinro").value, p: document.getElementById("f_paikka").value
+        o: document.getElementById("f_osoite").value, n: document.getElementById("f_postinro").value, k: document.getElementById("f_paikka").value,
+        lisatiedot: document.getElementById("f_lisatiedot").value, vapaat: document.getElementById("f_vapaat").value
     };
-    if(!f.t || !f.v) return alert("Täytä vähintään tilaaja ja varastonumero!");
-    let body = `TILAAJA: ${f.t} (${f.v})\nPVM: ${f.p}\nTOIMITUS: ${f.tapa}\nOSOITE: ${f.o}, ${f.n} ${f.p}\n\nTUOTTEET:\n`;
-    Object.values(cart).forEach(i => body += `- ${i.qty} kpl : ${i.name} (${i.code})\n`);
-    body += `\nLISÄTIEDOT: ${document.getElementById("f_lisatiedot").value}\nMUUT: ${document.getElementById("f_vapaat").value}`;
-    window.location.href = `mailto:lpvarasto@hartwall.fi?subject=Tilaus ${f.t}&body=${encodeURIComponent(body)}`;
+    if(!f.t || !f.v || !f.p || !f.tapa || !f.o || !f.n || !f.k) return alert("Täytä kaikki pakolliset kentät (*)!");
+
+    const subject = `Varaosatilaus - ${f.t} - ${f.v}`;
+    let body = `Tilaaja: ${f.t}\nVarastonumero: ${f.v}\nPäivämäärä: ${f.p}\nToimitustapa: ${f.tapa}\nOsoite: ${f.o}, ${f.n} ${f.k}\n`;
+    if(f.lisatiedot) body += `\nLISÄTIEDOT:\n${f.lisatiedot}\n`;
+    body += `\nTUOTTEET:\n`;
+    Object.values(cart).forEach(i => { body += `- ${i.qty} kpl : ${i.name} (${i.code})\n`; });
+    if(f.vapaat) body += `\nMUUT TUOTTEET:\n${f.vapaat}\n`;
+
+    window.location.href = `mailto:lpvarasto@hartwall.fi?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 </script>
 </body>
