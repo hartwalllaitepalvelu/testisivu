@@ -11,8 +11,8 @@
     --hw-dark:#002d62;
     --hw-light:#eef4fb; 
     --hw-green:#28a745; 
-    --sidebar-left: 300px;
-    --sidebar-right: 350px; 
+    --sidebar-left: 280px;
+    --sidebar-right: 320px; 
 }
 body { font-family:'Segoe UI',sans-serif; margin:0; background:#f0f2f5; font-size:14px; color:#333; }
 
@@ -35,104 +35,59 @@ body { font-family:'Segoe UI',sans-serif; margin:0; background:#f0f2f5; font-siz
     overflow-y: auto; 
     flex-shrink: 0;
 }
-.nav-header { 
-    background: var(--hw-dark); 
-    color: white; 
-    padding: 15px; 
-    font-weight: bold; 
-    font-size: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.nav-item { 
-    border-bottom: 1px solid #eee; 
-    cursor: pointer;
-}
-.nav-main-cat {
-    padding: 12px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 600;
-    transition: background 0.2s;
-}
-.nav-main-cat:hover { background: #f8f9fa; }
-.nav-sub-list { 
-    background: #fdfdfd; 
-    display: none; 
-    padding-bottom: 10px;
-}
-.nav-sub-item {
-    padding: 8px 15px 8px 30px;
-    font-size: 13px;
-    color: #555;
-    transition: color 0.2s;
-}
+.nav-header { background: var(--hw-dark); color: white; padding: 15px; font-weight: bold; }
+.nav-item { border-bottom: 1px solid #eee; cursor: pointer; }
+.nav-main-cat { padding: 12px 15px; display: flex; justify-content: space-between; font-weight: 600; }
+.nav-sub-list { background: #fdfdfd; display: none; padding-bottom: 10px; }
+.nav-sub-item { padding: 8px 15px 8px 30px; font-size: 13px; color: #555; }
 .nav-sub-item:hover { color: var(--hw-blue); text-decoration: underline; }
 .nav-item.active .nav-sub-list { display: block; }
-.nav-item.active .nav-main-cat { color: var(--hw-blue); background: var(--hw-light); }
 
 /* KESKIALUE */
 .main-content { flex: 1; padding: 20px; min-width: 0; }
 
-/* TIIVISTETTY LOMAKE */
-.form-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-    gap: 10px; 
-    background: white; 
-    padding: 15px; 
-    border-radius: 8px; 
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-}
+/* LOMAKE */
+.form-section { background: white; padding: 20px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 20px; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 15px; }
 .form-group { display: flex; flex-direction: column; }
 .form-group label { font-size: 11px; font-weight: bold; color: var(--hw-blue); margin-bottom: 2px; }
-.form-group input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
+.form-group input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+.full-width-group { grid-column: 1 / -1; margin-top: 10px; }
+.full-width-group textarea { width: 100%; height: 80px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; resize: vertical; box-sizing: border-box; }
+
+/* KATEGORIAVALIKKO YLHÄÄLLÄ */
+.top-nav-bar { margin-bottom: 15px; }
+#top-cat-select { width: 100%; padding: 12px; border: 1px solid var(--hw-blue); border-radius: 6px; font-weight: bold; }
 
 /* TUOTELISTAUS */
-header { background:white; padding:15px; border-radius:8px; margin-bottom:15px; border-bottom:3px solid var(--hw-blue); }
-.search-box { width:100%; padding:12px; border:1px solid #ddd; border-radius:6px; }
-
-.category-block { margin-top:30px; scroll-margin-top: 20px; }
-.category-title { background:var(--hw-blue); color:white; padding:10px 15px; border-radius:6px; font-weight:bold; margin-bottom:10px; }
-
 .product-item { 
-    display:grid; grid-template-columns:50px 1fr auto; gap:15px; 
-    padding:12px; border-bottom:1px solid #eee; background:white; align-items:center; 
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px; border-bottom: 1px solid #eee; background: white; 
 }
-.product-thumb { width:50px; height:50px; object-fit:contain; border-radius:4px; opacity:0; transition:0.3s; }
-.product-name { font-weight:600; color:var(--hw-blue); cursor:pointer; }
-.product-code { font-size:12px; color:#666; }
+.product-info { display: flex; align-items: center; gap: 15px; }
+.product-thumb { width: 45px; height: 45px; object-fit: contain; }
+.product-details { display: flex; flex-direction: column; }
+.product-name { font-weight: 600; color: var(--hw-blue); cursor: pointer; }
+.product-code { font-size: 12px; color: #666; }
+
+.qty-area { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.qty-input { width: 40px; text-align: center; border: 1px solid #ccc; padding: 5px; border-radius: 4px; font-weight: bold; }
+.qty-btn { width: 32px; height: 32px; border: none; background: #eee; border-radius: 4px; cursor: pointer; font-size: 18px; }
+.qty-btn:hover { background: #ddd; }
 
 /* OIKEA OSTOSKORI */
-.cart-sidebar { 
-    width: var(--sidebar-right); 
-    background: white; 
-    border-left: 1px solid #ddd; 
-    position: sticky; 
-    top: 0; 
-    height: 100vh; 
-    display: flex; 
-    flex-direction: column; 
-}
+.cart-sidebar { width: var(--sidebar-right); background: white; border-left: 1px solid #ddd; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; }
 .cart-header { background: var(--hw-green); color:white; padding:15px; text-align:center; font-weight:bold; }
 .cart-items { flex:1; overflow-y:auto; padding:10px; }
-.basket-item { display:flex; gap:10px; padding:8px; border-bottom:1px solid #eee; align-items:center; font-size:13px; }
 
-/* Admin & Modal */
-#adminSection { display: none; position: fixed; bottom: 0; width: 100%; background: white; border-top: 3px solid var(--hw-blue); padding: 10px; z-index: 5000; }
-#adminSection.active { display: flex; gap: 10px; justify-content: center; }
-#imgModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:20000; justify-content:center; align-items:center; }
-
-.qty-controls { display:flex; align-items:center; gap:5px; }
-.qty-btn { width:28px; height:28px; border:none; background:#eee; border-radius:4px; cursor:pointer; font-weight:bold; }
-
-@media (max-width: 1100px) {
-    .nav-sidebar { display: none; }
-    .cart-sidebar { display: none; }
+/* SIIRRY YLÖS NAPPI */
+#btnTop { 
+    position: fixed; bottom: 30px; right: 350px; display: none;
+    background: var(--hw-blue); color: white; border: none; padding: 15px; 
+    border-radius: 50%; cursor: pointer; z-index: 99; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
+
+#imgModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:20000; justify-content:center; align-items:center; }
 </style>
 </head>
 <body>
@@ -140,33 +95,47 @@ header { background:white; padding:15px; border-radius:8px; margin-bottom:15px; 
 <div id="loginOverlay">
     <div class="login-box">
         <h2 style="color:var(--hw-blue)">Hartwall Varaosat</h2>
-        <input id="uField" placeholder="Käyttäjätunnus" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:6px;">
-        <input id="pField" type="password" placeholder="Salasana" style="width:100%; padding:10px; margin-bottom:20px; border:1px solid #ccc; border-radius:6px;">
-        <button onclick="doAppLogin()" style="width:100%; padding:12px; background:var(--hw-blue); color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">KIRJAUDU SISÄÄN</button>
+        <input id="uField" placeholder="Käyttäjätunnus" style="width:100%; padding:10px; margin-bottom:10px;">
+        <input id="pField" type="password" placeholder="Salasana" style="width:100%; padding:10px; margin-bottom:20px;">
+        <button onclick="doAppLogin()" style="width:100%; padding:12px; background:var(--hw-blue); color:white; border:none; cursor:pointer;">KIRJAUDU SISÄÄN</button>
     </div>
 </div>
 
 <div id="appWrapper">
     <div class="app-container">
         <nav class="nav-sidebar">
-            <div class="nav-header">TUOTERYHMÄT <span>☰</span></div>
+            <div class="nav-header">TUOTERYHMÄT</div>
             <div id="dynamic-nav"></div>
         </nav>
 
         <main class="main-content">
-            <div class="form-grid">
-                <div class="form-group"><label>TILAAJA *</label><input id="f_tilaaja"></div>
-                <div class="form-group"><label>VARASTONRO *</label><input id="f_varasto"></div>
-                <div class="form-group"><label>PÄIVÄMÄÄRÄ *</label><input id="f_pvm" type="date"></div>
-                <div class="form-group"><label>TOIMITUSTAPA *</label><input id="f_tapa"></div>
-                <div class="form-group"><label>OSOITE *</label><input id="f_osoite"></div>
-                <div class="form-group"><label>POSTINRO *</label><input id="f_postinro"></div>
-                <div class="form-group"><label>PAIKKAKUNTA *</label><input id="f_paikka"></div>
+            <div class="form-section">
+                <div class="form-grid">
+                    <div class="form-group"><label>TILAAJA *</label><input id="f_tilaaja"></div>
+                    <div class="form-group"><label>VARASTONRO *</label><input id="f_varasto"></div>
+                    <div class="form-group"><label>PÄIVÄMÄÄRÄ *</label><input id="f_pvm" type="date"></div>
+                    <div class="form-group"><label>TOIMITUSTAPA *</label><input id="f_tapa"></div>
+                    <div class="form-group"><label>OSOITE *</label><input id="f_osoite"></div>
+                    <div class="form-group"><label>POSTINRO *</label><input id="f_postinro"></div>
+                    <div class="form-group"><label>PAIKKAKUNTA *</label><input id="f_paikka"></div>
+                </div>
+                <div class="full-width-group">
+                    <label style="font-size:11px; font-weight:bold; color:var(--hw-blue);">LISÄTIEDOT</label>
+                    <textarea id="f_lisatiedot" placeholder="Kirjoita tähän lisätiedot tilauksesta..."></textarea>
+                </div>
+                <div class="full-width-group">
+                    <label style="font-size:11px; font-weight:bold; color:var(--hw-blue);">MUUT TUOTTEET (Koodi ja kpl)</label>
+                    <textarea id="f_vapaat" placeholder="Jos tuotetta ei löydy listasta, lisää se tähän muodossa: Koodi, kpl määrä..."></textarea>
+                </div>
             </div>
 
-            <header>
-                <input id="filter" class="search-box" placeholder="Hae tuotteita..." oninput="render(this.value)">
-            </header>
+            <div class="top-nav-bar">
+                <select id="top-cat-select" onchange="jumpTo(this.value)">
+                    <option value="">-- Valitse kategoria --</option>
+                </select>
+            </div>
+
+            <input id="filter" class="search-box" style="width:100%; padding:12px; margin-bottom:15px; box-sizing:border-box;" placeholder="Hae tuotteita nimellä tai koodilla..." oninput="render(this.value)">
 
             <div id="main-list"></div>
         </main>
@@ -174,23 +143,29 @@ header { background:white; padding:15px; border-radius:8px; margin-bottom:15px; 
         <aside class="cart-sidebar">
             <div class="cart-header">OSTOSKORI (<span id="basket-count">0</span>)</div>
             <div id="basket-items" class="cart-items"></div>
-            <div style="padding:15px; background:#f9f9f9;">
-                <textarea id="f_lisatiedot" placeholder="Lisätiedot..." style="width:100%; margin-bottom:10px; padding:5px;"></textarea>
-                <textarea id="f_vapaat" placeholder="Muut tuotteet (koodi/kpl)..." style="width:100%; margin-bottom:10px; padding:5px;"></textarea>
+            <div style="padding:15px; border-top:1px solid #ddd;">
                 <button onclick="finalSubmit()" style="width:100%; padding:15px; background:var(--hw-green); color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">LÄHETÄ TILAUS</button>
-                <button id="adminLoginBtn" style="width:100%; margin-top:10px; font-size:10px; background:none; border:none; color:#aaa; cursor:pointer;">Ylläpito</button>
             </div>
         </aside>
     </div>
 </div>
 
+<button onclick="window.scrollTo({top:0, behavior:'smooth'})" id="btnTop" title="Ylös">↑</button>
+
 <div id="imgModal"><img id="modalImage" style="max-width:90%; max-height:90%;"><span id="closeModal" style="position:fixed; top:20px; right:30px; color:white; font-size:40px; cursor:pointer;">&times;</span></div>
 
 <script>
-// (Sallitut käyttäjät ja asennuspaketit säilyvät samoina kuin aiemmin...)
 const sallitutKayttajat = {"tomppa":"Tomi7122","markku":"parkinson","jaakko":"vendingjaska","dan":"huoltodan","tommi":"nappie","samia":"koksmeny","bob":"nayri","jouni":"paju1","jussi":"paukku","sami":"ruoska","jarno":"kurnu"};
+let data = {}; let cart = {}; let categoryStructure = [];
 
-let data = {}; let cart = {}; let stockStatus = {}; let categoryStructure = [];
+// Ylös-napin näyttäminen rullatessa
+window.onscroll = function() {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        document.getElementById("btnTop").style.display = "block";
+    } else {
+        document.getElementById("btnTop").style.display = "none";
+    }
+};
 
 async function doAppLogin() {
     const u = document.getElementById("uField").value.trim().toLowerCase();
@@ -208,13 +183,12 @@ async function loadAllData() {
         const [resData, resCats] = await Promise.all([fetch("data.txt"), fetch("kategoriat.txt")]);
         const textData = await resData.text();
         const textCats = await resCats.text();
-        
         data = parseData(textData);
         categoryStructure = parseCategories(textCats);
-        
         renderNav();
         render();
-    } catch(e) { console.error("Datan lataus epäonnistui"); }
+        populateTopSelect();
+    } catch(e) { console.error("Datan lataus epäonnistui", e); }
 }
 
 function parseData(text) {
@@ -251,9 +225,7 @@ function renderNav() {
         const item = document.createElement("div");
         item.className = "nav-item";
         item.innerHTML = `
-            <div class="nav-main-cat" onclick="this.parentElement.classList.toggle('active')">
-                ${main.name} <span>❯</span>
-            </div>
+            <div class="nav-main-cat" onclick="this.parentElement.classList.toggle('active')">${main.name} <span>▾</span></div>
             <div class="nav-sub-list">
                 ${main.subs.map(s => `<div class="nav-sub-item" onclick="jumpTo('${s}')">${s}</div>`).join('')}
             </div>
@@ -262,11 +234,20 @@ function renderNav() {
     });
 }
 
+function populateTopSelect() {
+    const sel = document.getElementById("top-cat-select");
+    categoryStructure.forEach(main => {
+        main.subs.forEach(sub => {
+            const opt = document.createElement("option");
+            opt.value = sub; opt.textContent = sub;
+            sel.appendChild(opt);
+        });
+    });
+}
+
 function render(filter = "") {
     const list = document.getElementById("main-list");
     list.innerHTML = "";
-    
-    // Käydään läpi kategoriat.txt mukaisessa järjestyksessä
     categoryStructure.forEach(main => {
         main.subs.forEach(subName => {
             const prods = data[subName] || [];
@@ -274,22 +255,23 @@ function render(filter = "") {
             if (filtered.length === 0 && filter) return;
 
             const block = document.createElement("div");
-            block.className = "category-block";
-            block.id = subName;
-            block.innerHTML = `<div class="category-title">${subName}</div>`;
+            block.className = "category-block"; block.id = subName;
+            block.innerHTML = `<div style="background:var(--hw-blue); color:white; padding:10px; margin:20px 0 10px 0; border-radius:4px; font-weight:bold;">${subName}</div>`;
             
             filtered.forEach(p => {
                 const row = document.createElement("div");
                 row.className = "product-item";
                 row.innerHTML = `
-                    <img class="product-thumb" id="img_${p.code}" src="images/${p.code}.png" onload="this.style.opacity=1" onerror="this.style.display='none'">
                     <div class="product-info">
-                        <div class="product-name" onclick="openImage('${p.code}')">${p.name}</div>
-                        <div class="product-code">${p.code}</div>
+                        <img class="product-thumb" src="images/${p.code}.png" onerror="this.style.display='none'">
+                        <div class="product-details">
+                            <span class="product-name" onclick="openImage('${p.code}')">${p.name}</span>
+                            <span class="product-code">${p.code}</span>
+                        </div>
                     </div>
-                    <div class="qty-controls">
+                    <div class="qty-area">
                         <button class="qty-btn" onclick="updateQty('${p.code}', -1)">-</button>
-                        <span id="q_${p.code}">${cart[p.code]?.qty || 0}</span>
+                        <input class="qty-input" id="q_${p.code}" value="${cart[p.code]?.qty || 0}" readonly>
                         <button class="qty-btn" onclick="updateQty('${p.code}', 1)">+</button>
                     </div>
                 `;
@@ -308,8 +290,7 @@ function updateQty(code, delta) {
     }
     cart[code].qty += delta;
     if (cart[code].qty <= 0) delete cart[code];
-    
-    const disp = document.getElementById("q_" + code); if (disp) disp.textContent = cart[code]?.qty || 0;
+    document.getElementById("q_" + code).value = cart[code]?.qty || 0;
     updateCartUI();
 }
 
@@ -318,16 +299,13 @@ function updateCartUI() {
     div.innerHTML = "";
     const items = Object.values(cart);
     items.forEach(i => {
-        div.innerHTML += `
-            <div class="basket-item">
-                <div style="flex:1"><b>${i.code}</b><br>${i.name}</div>
-                <div>${i.qty} kpl</div>
-            </div>`;
+        div.innerHTML += `<div style="padding:8px; border-bottom:1px solid #eee; font-size:12px;"><b>${i.code}</b> ${i.name} <br> <b>${i.qty} kpl</b></div>`;
     });
     document.getElementById("basket-count").textContent = items.length;
 }
 
 function jumpTo(id) {
+    if(!id) return;
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
 }
@@ -339,7 +317,6 @@ function openImage(code) {
 document.getElementById("closeModal").onclick = () => document.getElementById("imgModal").style.display = "none";
 
 function finalSubmit() {
-    // Sama sähköpostilähetys kuin aiemminkin...
     const f = {
         t: document.getElementById("f_tilaaja").value,
         v: document.getElementById("f_varasto").value,
@@ -351,12 +328,12 @@ function finalSubmit() {
         lisatiedot: document.getElementById("f_lisatiedot").value,
         vapaat: document.getElementById("f_vapaat").value
     };
-    if(!f.t || !f.v) { alert("Täytä tilaajatiedot!"); return; }
+    if(!f.t || !f.v) { alert("Täytä tilaaja ja varastonumero!"); return; }
     
     let body = `TILAAJA: ${f.t} (${f.v})\nPVM: ${f.p}\nTOIMITUS: ${f.tapa}\nOSOITE: ${f.o}, ${f.nro} ${f.paikka}\n\nTUOTTEET:\n`;
     Object.values(cart).forEach(i => { body += `- ${i.qty} kpl : ${i.name} (${i.code})\n`; });
     if(f.lisatiedot) body += `\nLISÄTIEDOT: ${f.lisatiedot}`;
-    if(f.vapaat) body += `\nMUUT: ${f.vapaat}`;
+    if(f.vapaat) body += `\nMUUT TUOTTEET:\n${f.vapaat}`;
     
     window.location.href = `mailto:lpvarasto@hartwall.fi?subject=Tilaus ${f.t}&body=${encodeURIComponent(body)}`;
 }
