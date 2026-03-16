@@ -8,7 +8,7 @@
 :root { --hw-blue:#004593; --hw-dark:#002d62; --hw-green:#28a745; --sidebar-w: 280px; }
 body { font-family:'Segoe UI', sans-serif; margin:0; background:#f4f7f9; font-size:14px; color:#333; padding-bottom: 120px; }
 
-/* Kirjautumiset */
+/* Kirjautuminen */
 #loginOverlay, #adminLoginPopup { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,69,147,0.95); display:flex; justify-content:center; align-items:center; z-index:10000; }
 .login-box { background:white; padding:40px; border-radius:12px; width:340px; text-align:center; box-shadow:0 20px 40px rgba(0,0,0,0.4); }
 .login-box input { width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box; }
@@ -71,6 +71,11 @@ body { font-family:'Segoe UI', sans-serif; margin:0; background:#f4f7f9; font-si
 .close-x { position: absolute; top: 20px; right: 25px; font-size: 32px; cursor: pointer; color: #999; font-weight: bold; }
 .close-x:hover { color: #333; }
 
+/* YHTEENVETO TYYLIT */
+.summary-header { background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 20px; }
+.summary-header h4 { margin: 0 0 10px 0; color: var(--hw-blue); text-transform: uppercase; font-size: 13px; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+.summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 14px; }
+
 /* YLÖS-NAPPI JA TARKASTELE KORIA */
 #btnTop { position: fixed; bottom: 110px; right: 300px; background: var(--hw-blue); color: white; border: none; padding: 15px 25px; border-radius: 30px; display: none; z-index: 999; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 #btnViewCart { background: var(--hw-green); color: white; border: none; padding: 14px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; font-size: 15px; box-shadow: 0 4px 10px rgba(40,167,69,0.2); }
@@ -110,8 +115,16 @@ body { font-family:'Segoe UI', sans-serif; margin:0; background:#f4f7f9; font-si
 <div id="viewCartModal" onclick="if(event.target==this)this.style.display='none'">
     <div class="modal-content">
         <span class="close-x" onclick="document.getElementById('viewCartModal').style.display='none'">&times;</span>
-        <h2 style="color:var(--hw-green); margin-bottom:30px; border-bottom: 2px solid #eee; padding-bottom: 15px;">Tilauksen yhteenveto</h2>
-        <div id="modal-cart-items" style="margin-bottom:30px;"></div>
+        <h2 id="summary-main-title" style="color:var(--hw-green); margin-top:0; border-bottom: 2px solid #eee; padding-bottom: 10px;">Varaosatilaus</h2>
+        
+        <div class="summary-header">
+            <h4>Tilaustiedot</h4>
+            <div id="summary-info" class="summary-grid"></div>
+        </div>
+
+        <div style="font-weight:bold; color:var(--hw-blue); margin-bottom:10px; text-transform: uppercase; font-size: 12px;">Tilatut tuotteet:</div>
+        <div id="modal-cart-items" style="margin-bottom:30px; border:1px solid #eee; border-radius:8px; overflow:hidden;"></div>
+        
         <div style="display:flex; gap:15px;">
             <button onclick="document.getElementById('viewCartModal').style.display='none'" style="flex:1; padding:18px; background:#f0f0f0; color:#333; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">LISÄÄ TUOTTEITA</button>
             <button onclick="document.getElementById('viewCartModal').style.display='none'; finalSubmit();" style="flex:1; padding:18px; background:var(--hw-green); color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">LÄHETÄ TILAUS</button>
@@ -163,6 +176,14 @@ body { font-family:'Segoe UI', sans-serif; margin:0; background:#f4f7f9; font-si
                     <div class="form-group"><label>Postinumero *</label><input id="f_postinro" required></div>
                     <div class="form-group"><label>Paikkakunta *</label><input id="f_paikka" required></div>
                 </div>
+                <div style="margin-top:20px;">
+                    <label style="font-size:12px; font-weight:700;">LISÄTIEDOT</label>
+                    <textarea id="f_lisatiedot" style="width:100%; height:60px; border-radius:8px; border:1px solid #cbd5e0; padding:10px;" placeholder="Lisätiedot..."></textarea>
+                </div>
+                <div style="margin-top:10px;">
+                    <label style="font-size:12px; font-weight:700;">MUUT TUOTTEET</label>
+                    <textarea id="f_vapaat" style="width:100%; height:60px; border-radius:8px; border:1px solid #cbd5e0; padding:10px;" placeholder="Nimi, kpl määrä..."></textarea>
+                </div>
             </div>
 
             <div id="search-anchor" class="search-wrapper">
@@ -204,6 +225,7 @@ body { font-family:'Segoe UI', sans-serif; margin:0; background:#f4f7f9; font-si
 <button onclick="scrollToSearch()" id="btnTop">YLÖS ↑</button>
 
 <script>
+// DATA ALKUPERÄISESTÄ TIEDOSTOSTA
 const asennusPaketit = {
     "Kotipizza": [{code:"15490",qty:1},{code:"26520",qty:1},{code:"V00713",qty:5},{code:"V00726",qty:2},{code:"V02356",qty:1},{code:"V41800",qty:1},{code:"V02257",qty:1},{code:"V03010",qty:1},{code:"T00678",qty:5},{code:"T00723",qty:1},{code:"T41468",qty:2},{code:"T00384",qty:2},{code:"10172",qty:1},{code:"T41002",qty:2},{code:"T00609",qty:2},{code:"T41101",qty:2}],
     "Subway": [{code:"15279",qty:1},{code:"10160",qty:1},{code:"26520",qty:1},{code:"V00713",qty:4},{code:"V00726",qty:1},{code:"V00727",qty:1},{code:"V02356",qty:1},{code:"V41800",qty:1},{code:"V02257",qty:1},{code:"V03010",qty:1},{code:"T00678",qty:4},{code:"T00723",qty:1},{code:"T41468",qty:2},{code:"T00384",qty:2},{code:"T41002",qty:2},{code:"T00609",qty:2},{code:"T41101",qty:2}],
@@ -296,21 +318,43 @@ function openPkgModal(name) {
 function openCartModal() {
     const modal = document.getElementById("viewCartModal");
     const content = document.getElementById("modal-cart-items");
+    const info = document.getElementById("summary-info");
+    
+    // Tilaajatiedot modalin yläosaan
+    const t = document.getElementById("f_tilaaja").value;
+    const v = document.getElementById("f_varasto").value;
+    const p = document.getElementById("f_pvm").value;
+    const tapa = document.getElementById("f_tapa").value;
+    const o = document.getElementById("f_osoite").value;
+    const n = document.getElementById("f_postinro").value;
+    const k = document.getElementById("f_paikka").value;
+
+    document.getElementById("summary-main-title").innerText = `Varaosatilaus - ${t || 'Nimi'} - ${v || 'Nro'}`;
+
+    info.innerHTML = `
+        <div><b>Tilaaja:</b> ${t || '-'}</div>
+        <div><b>Varasto:</b> ${v || '-'}</div>
+        <div><b>Pvm:</b> ${p || '-'}</div>
+        <div><b>Toimitus:</b> ${tapa || '-'}</div>
+        <div style="grid-column: 1 / -1;"><b>Osoite:</b> ${o || '-'}, ${n || ''} ${k || ''}</div>
+    `;
+
     content.innerHTML = "";
     Object.values(cart).forEach(i => {
         content.innerHTML += `
-            <div style="padding:20px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+            <div style="padding:15px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; background:#fff;">
                 <div style="flex:1; padding-right:20px;">
-                    <span style="font-weight:bold; font-size:16px; color:var(--hw-blue);">${i.code}</span><br>
-                    <span style="font-size:15px; color:#333;">${i.name}</span>
+                    <span style="font-weight:bold; font-size:15px; color:var(--hw-blue);">${i.code}</span><br>
+                    <span style="font-size:14px; color:#333;">${i.name}</span>
                 </div>
                 <div class="qty-area">
-                    <button class="qty-btn" style="width:40px; height:40px;" onclick="updateQty('${i.code}','${i.name}',-1); openCartModal();">-</button>
-                    <input class="qty-input" style="width:50px; font-size:16px;" value="${i.qty}" readonly>
-                    <button class="qty-btn" style="width:40px; height:40px;" onclick="updateQty('${i.code}','${i.name}',1); openCartModal();">+</button>
+                    <button class="qty-btn" style="width:35px; height:35px;" onclick="updateQty('${i.code}','${i.name}',-1); openCartModal();">-</button>
+                    <input class="qty-input" style="width:45px; font-size:15px;" value="${i.qty}" readonly>
+                    <button class="qty-btn" style="width:35px; height:35px;" onclick="updateQty('${i.code}','${i.name}',1); openCartModal();">+</button>
                 </div>
             </div>`;
     });
+    
     if(Object.values(cart).length === 0) content.innerHTML = "<p style='text-align:center; padding:40px; font-size:18px; color:#999;'>Ostoskori on tyhjä.</p>";
     modal.style.display = "flex";
 }
