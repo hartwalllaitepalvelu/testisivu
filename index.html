@@ -6,7 +6,7 @@
 <title>Hartwall Varaosatilaus</title>
 <style>
 :root { --hw-blue:#004593; --hw-dark:#002d62; --hw-green:#28a745; --sidebar-w: 280px; }
-body { font-family:'Segoe UI', sans-serif; margin:0; background:#f4f7f9; font-size:14px; color:#333; padding-bottom: 100px; }
+body { font-family:'Segoe UI', sans-serif; margin:0; background:#f4f7f9; font-size:14px; color:#333; padding-bottom: 120px; }
 
 /* Kirjautumiset */
 #loginOverlay, #adminLoginPopup { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,69,147,0.95); display:flex; justify-content:center; align-items:center; z-index:10000; }
@@ -37,14 +37,13 @@ body { font-family:'Segoe UI', sans-serif; margin:0; background:#f4f7f9; font-si
 .form-group input { padding: 12px; border: 1px solid #cbd5e0; border-radius: 8px; }
 
 /* HAKU */
-.search-wrapper { position: relative; width: 100%; max-width: 600px; margin-bottom: 30px; }
+.search-wrapper { position: relative; width: 100%; max-width: 600px; margin-bottom: 15px; }
 .search-box { width: 100%; padding: 18px 50px 18px 25px; font-size: 18px; border: 2px solid var(--hw-blue); border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); outline: none; box-sizing: border-box; }
 .search-clear { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 24px; color: #aaa; cursor: pointer; background: none; border: none; }
 
 /* TUOTTEET */
 .product-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #edf2f7; background: white; }
 .product-item.out { opacity: 0.5; background: #f0f0f0; }
-.product-item.hidden-prod { border: 2px dashed red; } 
 .qty-area { display: flex; align-items: center; gap: 10px; }
 .qty-btn { width: 36px; height: 36px; border: none; background: #edf2f7; border-radius: 50%; cursor: pointer; font-size: 20px; }
 .qty-input { width: 45px; text-align: center; border: 1px solid #cbd5e0; padding: 8px; font-weight: bold; border-radius: 6px; }
@@ -65,10 +64,10 @@ body { font-family:'Segoe UI', sans-serif; margin:0; background:#f4f7f9; font-si
 /* MODALS */
 #pkgModal, #imgModal, #relatedOverlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:20000; justify-content:center; align-items:center; }
 .modal-content { background:white; padding:30px; border-radius:12px; width:500px; max-width:90%; max-height:80vh; overflow-y:auto; }
-.related-item { padding:12px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; }
 
-/* YLÖS-NAPPI */
+/* YLÖS-NAPPI JA TARKASTELE KORIA */
 #btnTop { position: fixed; bottom: 110px; right: 300px; background: var(--hw-blue); color: white; border: none; padding: 15px 25px; border-radius: 30px; display: none; z-index: 999; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+#btnViewCart { background: var(--hw-green); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
 
 @media (max-width: 1100px) {
     .nav-sidebar, .cart-sidebar { position: fixed; left: -100%; top: 55px; z-index: 3000; width: 85%; height: calc(100vh - 55px); transition: 0.3s; }
@@ -133,7 +132,6 @@ body { font-family:'Segoe UI', sans-serif; margin:0; background:#f4f7f9; font-si
         </nav>
 
         <main class="main-content">
-            <div id="top-anchor"></div>
             <div class="form-section">
                 <div class="form-grid">
                     <div class="form-group"><label>Tilaaja *</label><input id="f_tilaaja" required></div>
@@ -158,6 +156,8 @@ body { font-family:'Segoe UI', sans-serif; margin:0; background:#f4f7f9; font-si
                 <input id="filter" class="search-box" placeholder="Hae tuotteita..." oninput="render(this.value)">
                 <button class="search-clear" onclick="clearSearch()">×</button>
             </div>
+
+            <button id="btnViewCart" onclick="toggleSidebar('cart-sidebar')">🛒 TARKASTELE OSTOSKORIA (<span id="btn-cart-count">0</span>)</button>
 
             <div class="pkg-container">
                 <div style="font-weight:bold; color:var(--hw-blue); margin-bottom:15px;">VALMIIT ASENNUSPAKETIT</div>
@@ -188,7 +188,7 @@ body { font-family:'Segoe UI', sans-serif; margin:0; background:#f4f7f9; font-si
     <button onclick="document.getElementById('adminSection').style.display='none'" style="color:red; background:none; border:none; cursor:pointer; font-weight:bold;">SULJE X</button>
 </div>
 
-<button onclick="scrollToTop()" id="btnTop">YLÖS ↑</button>
+<button onclick="scrollToSearch()" id="btnTop">YLÖS ↑</button>
 
 <script>
 // ALKUPERÄINEN DATA
@@ -208,6 +208,8 @@ const relatedItems = {
 const sallitut = {"tomppa":"Tomi7122","markku":"parkinson","jaakko":"vendingjaska","dan":"huoltodan","tommi":"nappie","samia":"koksmeny","bob":"nayri","jouni":"paju1","jussi":"paukku","sami":"ruoska","jarno":"kurnu"};
 
 let allData = {}; let cart = {}; let categories = []; let stockStatus = {}; let isAdmin = false; let currentPkgItems = [];
+
+window.onscroll = () => { document.getElementById("btnTop").style.display = window.scrollY > 400 ? "block" : "none"; };
 
 function doAppLogin() {
     const u = document.getElementById("uField").value.trim().toLowerCase();
@@ -255,9 +257,8 @@ async function loadFiles() {
     } catch(e) { console.error(e); }
 }
 
-function scrollToTop() {
-    window.scrollTo({ top: 350, behavior: 'smooth' });
-}
+function clearSearch() { document.getElementById("filter").value = ""; render(""); }
+function scrollToSearch() { document.getElementById("search-anchor").scrollIntoView({ behavior: "smooth" }); }
 
 function renderPkgs() {
     const div = document.getElementById("pkg-buttons"); div.innerHTML = "";
@@ -310,25 +311,11 @@ function render(filter = "") {
             let filt = prods.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()) || p.code.toLowerCase().includes(filter.toLowerCase()));
             let block = document.createElement("div"); block.id = sub;
             let hasVisible = false;
-
             filt.forEach(p => {
                 let s = stockStatus[p.code] || {};
                 if (s.hidden && !isAdmin) return;
                 hasVisible = true;
-                block.innerHTML += `
-                    <div class="product-item ${s.outOfStock ? 'out' : ''} ${s.hidden ? 'hidden-prod' : ''}">
-                        <div style="flex:1">
-                            <b>${p.name}</b><br><small>${p.code}</small> 
-                            ${s.outOfStock ? ' <b style="color:red">LOPPU!</b>' : ''}
-                            ${s.hidden ? ' <b style="color:blue">[PIILOTETTU]</b>' : ''}
-                            ${s.eta ? '<br><i>ETA: '+s.eta+'</i>' : ''}
-                        </div>
-                        <div class="qty-area">
-                            <button class="qty-btn" onclick="updateQty('${p.code}','${p.name}',-1)">-</button>
-                            <input class="qty-input" id="q_${p.code}" value="${cart[p.code]?.qty || 0}" readonly>
-                            <button class="qty-btn" onclick="updateQty('${p.code}','${p.name}',1)">+</button>
-                        </div>
-                    </div>`;
+                block.innerHTML += `<div class="product-item ${s.outOfStock ? 'out' : ''} ${s.hidden ? 'hidden-prod' : ''}"><div style="flex:1"><b>${p.name}</b><br><small>${p.code}</small> ${s.outOfStock ? ' <b style="color:red">LOPPU!</b>' : ''} ${s.eta ? '<br><i>ETA: '+s.eta+'</i>' : ''}</div><div class="qty-area"><button class="qty-btn" onclick="updateQty('${p.code}','${p.name}',-1)">-</button><input class="qty-input" id="q_${p.code}" value="${cart[p.code]?.qty || 0}" readonly><button class="qty-btn" onclick="updateQty('${p.code}','${p.name}',1)">+</button></div></div>`;
             });
             if (hasVisible) {
                 let title = document.createElement("div");
@@ -346,10 +333,7 @@ function updateQty(code, name, delta, skipRelated = false) {
         if(!name) { for(let c in allData) { let p = allData[c].find(x => x.code === code); if(p) name = p.name; } }
         cart[code] = { code, name: name || "Tuote " + code, qty: 0 };
     }
-    
-    // RELATED ITEMS POPUP (Alkuperäinen logiikka)
     if(delta > 0 && relatedItems[code] && !skipRelated) openRelatedPopup(code);
-    
     cart[code].qty += delta;
     if(cart[code].qty <= 0) delete cart[code];
     let el = document.getElementById("q_"+code); if(el) el.value = cart[code]?.qty || 0;
@@ -361,11 +345,7 @@ function openRelatedPopup(parentCode) {
     relatedItems[parentCode].forEach(relCode => {
         let relName = "Tuote " + relCode;
         for (let cat in allData) { let p = allData[cat].find(x => x.code === relCode); if (p) { relName = p.name; break; } }
-        content.innerHTML += `
-            <div class="related-item">
-                <div style="flex:1;"><b>${relCode}</b><br>${relName}</div>
-                <button onclick="updateQty('${relCode}', '${relName}', 1, true)" style="background:var(--hw-green); color:white; border:none; padding:8px; border-radius:6px; cursor:pointer; font-weight:bold;">Lisää</button>
-            </div>`;
+        content.innerHTML += `<div class="related-item"><div style="flex:1;"><b>${relCode}</b><br>${relName}</div><button onclick="updateQty('${relCode}', '${relName}', 1, true)" style="background:var(--hw-green); color:white; border:none; padding:8px; border-radius:6px; cursor:pointer; font-weight:bold;">Lisää</button></div>`;
     });
     document.getElementById("relatedOverlay").style.display = "flex";
 }
@@ -373,10 +353,12 @@ function openRelatedPopup(parentCode) {
 function renderCart() {
     const div = document.getElementById("basket-items"); div.innerHTML = "";
     Object.values(cart).forEach(i => {
-        div.innerHTML += `<div class="cart-item"><div style="font-weight:bold; margin-bottom:10px; font-size:13px;">${i.code} - ${i.name}</div><div class="qty-area" style="justify-content:flex-end; border-top:1px solid #f0f0f0; padding-top:10px;"><button class="qty-btn" style="width:28px; height:28px;" onclick="updateQty('${i.code}','${i.name}',-1)">-</button><input class="qty-input" style="width:35px; padding:5px;" value="${i.qty}" readonly><button class="qty-btn" style="width:28px; height:28px;" onclick="updateQty('${i.code}','${i.name}',1)">+</button></div></div>`;
+        div.innerHTML += `<div class="cart-item"><div style="font-weight:bold; margin-bottom:10px; font-size:13px;">${i.code} - ${i.name}</div><div class="qty-area" style="justify-content:flex-end; border-top:1px solid #f0f0f0; padding-top:10px;"><button class="qty-btn" style="width:28px; height:28px; font-size:16px;" onclick="updateQty('${i.code}','${i.name}',-1)">-</button><input class="qty-input" style="width:35px; padding:4px;" value="${i.qty}" readonly><button class="qty-btn" style="width:28px; height:28px; font-size:16px;" onclick="updateQty('${i.code}','${i.name}',1)">+</button></div></div>`;
     });
-    document.getElementById("basket-count").textContent = Object.values(cart).length;
-    document.getElementById("m-count").textContent = Object.values(cart).length;
+    const total = Object.values(cart).length;
+    document.getElementById("basket-count").textContent = total;
+    document.getElementById("m-count").textContent = total;
+    document.getElementById("btn-cart-count").textContent = total;
 }
 
 function saveStockStatus() {
@@ -386,7 +368,6 @@ function saveStockStatus() {
 }
 
 function loadLocalStock() { try { const r = localStorage.getItem("stockStatus"); if(r) stockStatus = JSON.parse(r); } catch(e){} }
-function clearSearch() { document.getElementById("filter").value = ""; render(""); }
 function toggleSidebar(id) { document.getElementById(id).classList.toggle('open'); }
 function jumpTo(id) { const el = document.getElementById(id); if(el) { el.scrollIntoView({behavior:"smooth"}); document.getElementById("nav-sidebar").classList.remove("open"); } }
 
